@@ -1,0 +1,22 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+
+# Mac OS metadata
+__MACOSX/
+.DS_Store
+
+# Temporary & Log files
+*.log
+scratch/
+test.pdf
+test.docx
+test.html
+
+# Virtual environments
+venv/
+env/
+.env
+
