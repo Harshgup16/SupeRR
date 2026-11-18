@@ -111,6 +111,15 @@ def load_all_data():
 
 rankings, extras = load_all_data()
 
+def safe_style_df(df, format_dict):
+    styler = df.style.format(format_dict)
+    try:
+        import matplotlib
+        styler = styler.background_gradient(subset=["Weighted Clutch"], cmap="PuRd")
+    except Exception:
+        pass
+    return styler
+
 # ==================== SIDEBAR ====================
 with st.sidebar:
     st.markdown("""
@@ -236,14 +245,14 @@ with tab_official:
                 "Press. SR", "Base. SR", "Press. Avg", "Base. Avg", "Pressure Balls"
             ]
             st.dataframe(
-                display_df.style.format({
+                safe_style_df(display_df, {
                     "Weighted Clutch": "{:.3f}",
                     "Raw Clutch": "{:.3f}",
                     "Press. SR": "{:.1f}",
                     "Base. SR": "{:.1f}",
                     "Press. Avg": "{:.1f}",
                     "Base. Avg": "{:.1f}",
-                }).background_gradient(subset=["Weighted Clutch"], cmap="PuRd"),
+                }),
                 use_container_width=True,
                 hide_index=True
             )
@@ -296,14 +305,14 @@ with tab_official:
                 "Press. Econ", "Base. Econ", "Press. Bowl SR", "Base. Bowl SR", "Pressure Balls"
             ]
             st.dataframe(
-                display_df.style.format({
+                safe_style_df(display_df, {
                     "Weighted Clutch": "{:.3f}",
                     "Raw Clutch": "{:.3f}",
                     "Press. Econ": "{:.2f}",
                     "Base. Econ": "{:.2f}",
                     "Press. Bowl SR": "{:.1f}",
                     "Base. Bowl SR": "{:.1f}",
-                }).background_gradient(subset=["Weighted Clutch"], cmap="PuRd"),
+                }),
                 use_container_width=True,
                 hide_index=True
             )
