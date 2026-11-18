@@ -82,16 +82,17 @@ flowchart TD
 ## 📂 Repository Structure
 
 ```
-├── streamlit_app.py               # Main Streamlit Cloud App
+├── streamlit_app.py               # Main Streamlit Cloud App (with interactive 14-slide deck viewer)
 ├── requirements.txt               # Dependencies for Cloud deployment
 ├── index.html                     # Standalone HTML dashboard (zero server needed)
 ├── run_analysis.py                # Main analysis execution pipeline
-├── Methodology_Report_SupeRR_Selector.pdf   # Official submission report (854 KB)
-├── Methodology_Report_SupeRR_Selector.docx  # Word document report (766 KB)
+├── SupeRR_Selector_Season2_Presentation.pptx # Official Submission Presentation Deck (14 slides, 872 KB)
+├── SupeRR_Selector_Season2_Presentation.pdf  # Official Submission Report & Deck (14 slides, 490 KB)
 ├── Methodology_Report_SupeRR_Selector.md    # Markdown methodology
 ├── dashboard/
 │   ├── app.py                     # Streamlit app mirror
 │   ├── index.html                 # Interactive web dashboard
+│   ├── slides/                    # High-res 14 presentation slide images
 │   └── data/                      # Pre-calculated JSON metrics
 │       ├── rankings.json
 │       └── extras.json

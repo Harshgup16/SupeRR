@@ -138,27 +138,27 @@ with st.sidebar:
     
     st.markdown("---")
     
-    st.markdown("### 📥 Download Reports")
-    pdf_path = os.path.join(ROOT_DIR, "Methodology_Report_SupeRR_Selector.pdf")
-    docx_path = os.path.join(ROOT_DIR, "Methodology_Report_SupeRR_Selector.docx")
+    st.markdown("### 📥 Download Submissions")
+    pptx_path = os.path.join(ROOT_DIR, "SupeRR_Selector_Season2_Presentation.pptx")
+    pdf_path = os.path.join(ROOT_DIR, "SupeRR_Selector_Season2_Presentation.pdf")
     
-    if os.path.exists(pdf_path):
-        with open(pdf_path, "rb") as f:
+    if os.path.exists(pptx_path):
+        with open(pptx_path, "rb") as f:
             st.download_button(
-                label="📄 Download PDF Report (854 KB)",
+                label="📊 Download Presentation (.pptx)",
                 data=f,
-                file_name="Methodology_Report_SupeRR_Selector.pdf",
-                mime="application/pdf",
+                file_name="SupeRR_Selector_Season2_Presentation.pptx",
+                mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
                 use_container_width=True
             )
             
-    if os.path.exists(docx_path):
-        with open(docx_path, "rb") as f:
+    if os.path.exists(pdf_path):
+        with open(pdf_path, "rb") as f:
             st.download_button(
-                label="📝 Download Word Report (766 KB)",
+                label="📄 Download Deck & Report (.pdf)",
                 data=f,
-                file_name="Methodology_Report_SupeRR_Selector.docx",
-                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                file_name="SupeRR_Selector_Season2_Presentation.pdf",
+                mime="application/pdf",
                 use_container_width=True
             )
             
@@ -197,8 +197,9 @@ with kpi6:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ==================== MAIN TABS ====================
-tab_official, tab_radar, tab_scatter, tab_tension, tab_calculator, tab_about = st.tabs([
+tab_official, tab_deck, tab_radar, tab_scatter, tab_tension, tab_calculator, tab_about = st.tabs([
     "🏆 Top 10 Official Rankings",
+    "📽️ Official Submission Deck",
     "🕸️ Player Radar Comparison",
     "📊 Baseline vs Pressure Metrics",
     "📈 Ball-by-Ball Match Tension",
@@ -334,6 +335,172 @@ with tab_official:
                 legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
             )
             st.plotly_chart(fig_econ, use_container_width=True)
+
+
+# ----------------- TAB 2: OFFICIAL PRESENTATION DECK -----------------
+with tab_deck:
+    st.subheader("📽️ Official Submission Presentation Deck (14 Slides)")
+    st.caption("SupeRR Selector Season 2 — Dynamic Win-Probability & Bayesian Clutch Modeling (Rajasthan Royals Round 1)")
+    
+    # Download header buttons
+    d_col1, d_col2, d_col3 = st.columns([1, 1, 2])
+    with d_col1:
+        if os.path.exists(pptx_path):
+            with open(pptx_path, "rb") as f:
+                st.download_button(
+                    label="📊 Download Deck (.pptx)",
+                    data=f,
+                    file_name="SupeRR_Selector_Season2_Presentation.pptx",
+                    mime="application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                    use_container_width=True,
+                    key="deck_tab_pptx"
+                )
+    with d_col2:
+        if os.path.exists(pdf_path):
+            with open(pdf_path, "rb") as f:
+                st.download_button(
+                    label="📄 Download Submission (.pdf)",
+                    data=f,
+                    file_name="SupeRR_Selector_Season2_Presentation.pdf",
+                    mime="application/pdf",
+                    use_container_width=True,
+                    key="deck_tab_pdf"
+                )
+    with d_col3:
+        st.markdown(
+            '<div style="text-align:right; font-size:0.85rem; color:#A7F3D0; padding-top:8px;">'
+            '✅ Verified against 200,999 deliveries • 867 matches (IPL & T20I)'
+            '</div>',
+            unsafe_allow_html=True
+        )
+    
+    st.markdown("---")
+    
+    slide_metadata = {
+        1: {
+            "title": "Slide 1: Executive Cover & Scope",
+            "desc": "Problem Statement Title: Dynamic Win-Probability & Bayesian Clutch Modeling for Pressure-Performance Analytics in T20 Cricket. Data scope: 200,999 deliveries, 867 matches (IPL & T20I, 2022–2026)."
+        },
+        2: {
+            "title": "Slide 2: Proposed Solution — Problem Statement & Challenges",
+            "desc": "Cricket analytics proxies pressure with static heuristics (e.g. overs 16–20 = death overs). A team on 160/2 needing 15 off 18 balls faces negligible pressure, whereas 28/4 in over 5 chasing 190 faces extreme leverage. Static rules cannot tell them apart."
+        },
+        3: {
+            "title": "Slide 3: Proposed Solution — Detailed Architectural Framework",
+            "desc": "Dynamic Pressure Index (DPI 0.0–1.0) with win-probability knife-edge peak at 50/50 balance, par-score matrix for 1st innings, and multipliers for phase (1.30x), knockouts (1.30x), and momentum shocks (1.18x)."
+        },
+        4: {
+            "title": "Slide 4: Innovation & Uniqueness of the Solution",
+            "desc": "Symmetric pressure scoring both batting burden and bowling containment, ball-by-ball recalibration, 4D Clutch Factor, and Empirical Bayes shrinkage to prevent small-sample anomalies."
+        },
+        5: {
+            "title": "Slide 5: Technical Strategy — Tools & Stack",
+            "desc": "Vectorized Python 3 data pipeline with pandas & NumPy on 200,999 deliveries. Statistical modeling via SciPy, scikit-learn logistic regression, and Empirical Bayes shrinkage."
+        },
+        6: {
+            "title": "Slide 6: Technical Strategy — End-to-End Methodology",
+            "desc": "Three-phase execution pipeline: (1) Data Ingestion & Legal Ball Filtering, (2) Dynamic Win-Probability & DPI Calculation, (3) 4D Clutch Factor with Empirical Bayes Weighting."
+        },
+        7: {
+            "title": "Slide 7: Mathematical Framework — DPI & Clutch Factor Formulas",
+            "desc": "DPI = min(1.0, Base × M_phase × M_stakes × M_mom). Batting CF = 0.35·SR + 0.25·Avg + 0.20·Bnd% + 0.20·(1 - Dot%). Bowling CF = 0.30·Econ + 0.25·BowlSR + 0.25·Dot% + 0.20·(1 - Bnd%). Shrinkage Weight = N / (N + 50)."
+        },
+        8: {
+            "title": "Slide 8: Results — Top 10 Batters Under Pressure",
+            "desc": "Mahedi Hasan (1.592), Washington Sundar (1.304), Rajat Patidar (1.216), Rahul Tewatia (1.203), Ayush Badoni (1.188), Abishek Porel (1.126), Vaibhav Sooryavanshi (1.124), Devdutt Padikkal (1.069), David Warner (1.067), Towhid Hridoy (1.042)."
+        },
+        9: {
+            "title": "Slide 9: Results — Top 10 Bowlers Under Pressure",
+            "desc": "Ripon Mondol (1.689), Wellington Masakadza (1.614), Salman Mirza (1.569), Arshad Khan (1.482), Jimmy Neesham (1.481), Dunith Wellalage (1.449), Daniel Sams (1.430), Patrick Cummins (1.411), Shaheen Afridi (1.373), Richard Ngarava (1.367)."
+        },
+        10: {
+            "title": "Slide 10: Results — Player Pressure Profile & Uplift Matrix",
+            "desc": "Mahedi Hasan high-pressure zone strike rate and non-dot % uplift. Scatter plot displaying players above the diagonal who elevate performance under extreme tension."
+        },
+        11: {
+            "title": "Slide 11: Official Submission — Official Top 10 Batters & Bowlers Table",
+            "desc": "Final submission rankings for the Unstop form dropdowns. Contains exact Rank, Player Name, Weighted Clutch Factor, and Pressure Balls faced/bowled."
+        },
+        12: {
+            "title": "Slide 12: Feasibility & Viability — Edge Cases & Mitigations",
+            "desc": "Robustness verified across 50, 100, 150, 200 ball thresholds. Addresses Impact Player rule dynamics, attack strength weighting, and small-sample variance."
+        },
+        13: {
+            "title": "Slide 13: Impact & Strategic Benefits for Rajasthan Royals",
+            "desc": "Actionable scouting & auction intelligence: identifies true ice-in-the-veins finishers and death bowlers who peak when match win probability is on a knife edge."
+        },
+        14: {
+            "title": "Slide 14: Academic References & Deliverables",
+            "desc": "Duckworth & Lewis (1998), Carter & Guthrie (2004), Efron & Morris (1975) Stein estimator, Gelman et al. (2013) Bayesian Data Analysis."
+        }
+    }
+    
+    if "current_slide" not in st.session_state:
+        st.session_state.current_slide = 11
+        
+    nav_col1, nav_col2, nav_col3, nav_col4 = st.columns([2, 5, 2, 2])
+    
+    with nav_col1:
+        if st.button("◀ Previous Slide", use_container_width=True):
+            st.session_state.current_slide = max(1, st.session_state.current_slide - 1)
+            st.rerun()
+            
+    with nav_col2:
+        slide_options = [f"Slide {i}: {slide_metadata[i]['title'].split(':', 1)[1].strip()}" for i in range(1, 15)]
+        selected_option = st.selectbox(
+            "Go to Slide:",
+            slide_options,
+            index=st.session_state.current_slide - 1,
+            label_visibility="collapsed"
+        )
+        selected_num = int(selected_option.split(":")[0].replace("Slide", "").strip())
+        if selected_num != st.session_state.current_slide:
+            st.session_state.current_slide = selected_num
+            st.rerun()
+            
+    with nav_col3:
+        if st.button("Next Slide ▶", use_container_width=True):
+            st.session_state.current_slide = min(14, st.session_state.current_slide + 1)
+            st.rerun()
+            
+    with nav_col4:
+        if st.button("🎯 Jump to Slide 11", use_container_width=True):
+            st.session_state.current_slide = 11
+            st.rerun()
+            
+    current_idx = st.session_state.current_slide
+    slide_file = f"slide_{current_idx:02d}.png"
+    slide_img_path = os.path.join(ROOT_DIR, "dashboard", "slides", slide_file)
+    if not os.path.exists(slide_img_path):
+        slide_img_path = os.path.join(ROOT_DIR, "slides", slide_file)
+        
+    if os.path.exists(slide_img_path):
+        st.image(slide_img_path, use_container_width=True)
+    else:
+        st.warning(f"Slide image {slide_file} not found.")
+        
+    st.markdown(f'''
+    <div style="background: linear-gradient(135deg, #1C0C35 0%, #2A1245 100%); border-left: 4px solid #EA1A85; border-radius: 8px; padding: 14px 18px; margin-top: 14px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+        <h4 style="margin: 0 0 6px 0; color: #EA1A85 !important; font-size: 1.05rem;">{slide_metadata[current_idx]['title']}</h4>
+        <p style="margin: 0; color: #E2E8F0; font-size: 0.9rem; line-height: 1.5;">{slide_metadata[current_idx]['desc']}</p>
+    </div>
+    ''', unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    with st.expander("📑 View All 14 Slide Thumbnails & Jump Directly", expanded=False):
+        for row_start in range(1, 15, 4):
+            cols = st.columns(4)
+            for c_i, s_num in enumerate(range(row_start, min(row_start + 4, 15))):
+                with cols[c_i]:
+                    thumb_path = os.path.join(ROOT_DIR, "dashboard", "slides", f"slide_{s_num:02d}.png")
+                    if not os.path.exists(thumb_path):
+                        thumb_path = os.path.join(ROOT_DIR, "slides", f"slide_{s_num:02d}.png")
+                    if os.path.exists(thumb_path):
+                        st.image(thumb_path, caption=f"Slide {s_num}", use_container_width=True)
+                    if st.button(f"Open Slide {s_num}", key=f"thumb_{s_num}", use_container_width=True):
+                        st.session_state.current_slide = s_num
+                        st.rerun()
 
 # ----------------- TAB 2: PLAYER RADAR COMPARISON -----------------
 with tab_radar:
